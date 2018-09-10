@@ -10,15 +10,16 @@
                <Panel
                   headerText="{i18n>helloPanelTitle}">
                   <content>
+                                       <mvc:XMLView viewName="sap.ui.demo.walkthrough.view.HelloPanel"/>
 
-                     <Button
+                     <!-- <Button
                         text="{i18n>showHelloButtonText}"
                         press="onShowHello"/>
                      <Input
                         value="{/recipient/name}"
                         description="Hello {/recipient/name}"
                         valueLiveUpdate="true"
-                        width="60%"/>
+                        width="60%"/> -->
                   </content>
                </Panel>
             </content>
