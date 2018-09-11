@@ -1,29 +1,36 @@
 sap.ui.define([
-  "sap/ui/core/mvc/Controller",
-  "sap/m/MessageToast"
-], function (Controller, MessageToast) {
-  "use strict";
-  return Controller.extend("sap.ui.demo.walkthrough.controller.HelloPanel", {
-     onShowHello : function () {
-        // read msg from i18n model
-        var oBundle = this.getView().getModel("i18n").getResourceBundle();
-        var sRecipient = this.getView().getModel().getProperty("/recipient/name");
-        var sMsg = oBundle.getText("helloMsg", [sRecipient]);
-        // show message
-        MessageToast.show(sMsg);
-     },
-     onOpenDialog : function () {
-      var oView = this.getView();
-      var oDialog = oView.byId("helloDialog");
-      // create dialog lazily
-      if (!oDialog) {
-         // create dialog via fragment factory
-         oDialog = sap.ui.xmlfragment(oView.getId(), "sap.ui.demo.walkthrough.view.HelloDialog");
-         oView.addDependent(oDialog);
-      }
+	"sap/ui/base/ManagedObject"
+], function (ManagedObject) {
+	"use strict";
 
+	return ManagedObject.extend("sap.ui.demo.walkthrough.controller.HelloDialog", {
 
-      oDialog.open();
-   }
-  });
+		constructor : function (oView) {
+			this._oView = oView;
+		},
+
+		exit : function () {
+			delete this._oView;
+		},
+
+		open : function () {
+			var oView = this._oView;
+			var oDialog = oView.byId("helloDialog");
+
+			// create dialog lazily
+			if (!oDialog) {
+				var oFragmentController = {
+					onCloseDialog : function () {
+						oDialog.close();
+					}
+				};
+				// create dialog via fragment factory
+				oDialog = sap.ui.xmlfragment(oView.getId(), "sap.ui.demo.walkthrough.view.HelloDialog", oFragmentController);
+				// connect dialog to the root view of this component (models, lifecycle)
+				oView.addDependent(oDialog);
+			}
+			oDialog.open();
+		}
+	});
+
 });
