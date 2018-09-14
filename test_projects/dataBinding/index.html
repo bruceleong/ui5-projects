@@ -20,11 +20,15 @@
       var oModel = new sap.ui.model.json.JSONModel({
         firstName: "Bruce",
 				lastName: "Leong",
-				enabled: true,
-				panelHeaderText: "Data Binding Basics"
+				enabled: true
       })
       sap.ui.getCore().setModel(oModel)
-			// Display the XML view called "App"
+      // Display the XML view called "App"
+
+      var oResourcesModel = new sap.ui.model.resource.ResourceModel({bundleName: "sap.ui.demo.db.i18n.i18n"});
+
+      sap.ui.getCore().setModel(oResourcesModel, "i18n");
+
 			new sap.ui.core.mvc.XMLView({ viewName : "sap.ui.demo.db.view.App" })
 				.placeAt("content");
 		});
