@@ -1,0 +1,9 @@
+"dataSources": {
+	"default": {
+		"uri": "http://services.odata.org/TripPinRESTierService/(S(id))/",
+		"type": "OData",
+		"settings": {
+			"odataVersion": "4.0"
+		}
+	}
+}
